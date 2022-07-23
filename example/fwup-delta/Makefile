@@ -27,6 +27,7 @@ SRCS_APP = \
 
 SRCS_LOADER = \
   crc32.c \
+  simple_fileio.c \
   dfu.c \
   loader.c \
   loader_shell_commands.c \
@@ -128,9 +129,9 @@ $(BUILD_DIR)/$(PROJECT)-%.bin: $(BUILD_DIR)/$(PROJECT)-%.elf $(PK_PEM_PATH)
 $(BUILD_DIR)/patch_bin.o: $(BUILD_DIR)/patch.bin
 	$(Q)$(OCPY) -I binary -O elf32-littlearm -B arm --add-section app_patch=$< $< $@
 
-$(BUILD_DIR)/patch.bin: $(BUILD_DIR)/$(PROJECT)-app-patched.bin $(BUILD_DIR)/$(PROJECT)-app.bin
+$(BUILD_DIR)/patch.bin: $(BUILD_DIR)/$(PROJECT)-app.bin $(BUILD_DIR)/$(PROJECT)-app-patched.bin
 	$(ECHO) "  JDIFF	  $@"
-	$(Q)$(JDIFF) $^ $@
+	$(Q)$(JDIFF) $^ $@ &>/dev/null # prints useless warning from emscripten
 
 $(BUILD_DIR)/$(PROJECT)-app.elf: $(SRCS_APP) $(OPENCM3_LIB)
 	$(ECHO) "  LD	  $@"
@@ -172,11 +173,11 @@ $(JANPATCH_PATH)/%.c:
 	$(Q)$(GIT) clone https://github.com/janjongboom/janpatch
 
 $(OPENCM3_LIB): $(OPENCM3_PATH)
-	$(ECHO) "Building libopencm3"
-	$(Q)$(MAKE) -s -C $(OPENCM3_PATH)
+	$(ECHO) "  BUILD	  libopencm3"
+	$(Q)$(MAKE) -s -C $(OPENCM3_PATH) 1>/dev/null
 
 
 .PHONY: clean
 clean:
-	$(ECHO) "  CLEAN		rm -rf $(BUILD_DIR)"
+	$(ECHO) "  CLEAN	  $(BUILD_DIR)"
 	$(Q)rm -rf $(BUILD_DIR)
