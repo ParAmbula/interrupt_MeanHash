@@ -42,6 +42,7 @@ int dfu_read(image_slot_t slot, void *ptr, long int offset, size_t count) {
 int dfu_write(image_slot_t slot, const void *ptr, long int offset, size_t count) {
     uint32_t addr = (uint32_t)(slot == IMAGE_SLOT_1 ? &__slot1rom_start__ : &__slot2rom_start__);
     addr += offset;
+    // FIXME this needs slot overflow checks
     flash_program(addr, ptr, count);
     return count;
 }

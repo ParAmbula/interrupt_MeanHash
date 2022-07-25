@@ -98,7 +98,7 @@ MICROECC_SOURCES = $(MICROECC_PATH)/uECC.c
 MICROECC_INCLUDES = $(MICROECC_PATH)
 
 JANPATCH_PATH = ./janpatch
-JANPATCH_INCLUDES = $(JANPATCH_PATH)/janpatch.h
+JANPATCH_INCLUDES = $(JANPATCH_PATH)
 
 INCLUDES += $(OPENCM3_INCLUDES)
 INCLUDES += $(CIFRA_INCLUDES)
@@ -151,7 +151,7 @@ $(BUILD_DIR)/$(PROJECT)-boot.elf: $(SRCS_BOOT) $(OPENCM3_LIB)
 	$(Q)$(MKDIR) -p $(BUILD_DIR)
 	$(Q)$(CC) $(CFLAGS) $(LDFLAGS_BOOT) $^ -o $@
 
-$(BUILD_DIR)/$(PROJECT)-loader.elf: $(SRCS_LOADER) $(OPENCM3_LIB) $(PATCH_BIN)
+$(BUILD_DIR)/$(PROJECT)-loader.elf: $(SRCS_LOADER) $(OPENCM3_LIB) $(PATCH_BIN) | $(JANPATCH_INCLUDES)
 	$(ECHO) "  LD	  $@"
 	$(Q)$(MKDIR) -p $(BUILD_DIR)
 	$(Q)$(CC) $(CFLAGS) $(LDFLAGS_LOADER) $^ -o $@
@@ -168,7 +168,7 @@ $(MICROECC_PATH)/%.c:
 	$(ECHO) "microecc not found, cloning it..."
 	$(Q)$(GIT) clone https://github.com/kmackay/micro-ecc 2>1
 
-$(JANPATCH_PATH)/%.c:
+$(JANPATCH_PATH):
 	$(ECHO) "janpatch not found, cloning it..."
 	$(Q)$(GIT) clone https://github.com/janjongboom/janpatch
 

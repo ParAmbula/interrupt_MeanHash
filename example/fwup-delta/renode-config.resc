@@ -2,7 +2,7 @@
 :description: This script runs the fwup example on stm32f429
 
 $name?="STM32F429"
-$bin?=@build/fwup-example.bin
+$bin?=@build/fwup-delta.bin
 
 # Create Machine & Load config
 mach create $name
