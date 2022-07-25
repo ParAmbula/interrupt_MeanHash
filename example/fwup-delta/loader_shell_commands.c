@@ -66,17 +66,6 @@ int cli_command_do_dfu(int argc, char *argv[]) {
     shell_put_line("Patching data");
     janpatch(ctx, &source, &patch, &target);
 
-
-//    shell_put_line("Writing data");
-//    // write image data
-//    data_ptr += sizeof(image_hdr_t);
-//    if (dfu_write_data(IMAGE_SLOT_2,
-//                       data_ptr,
-//                       (uint32_t)&_binary_build_patch_bin_size)) {
-//        shell_put_line("Image Write Failed");
-//        return -1;
-//    }
-
     // grab header
     const image_hdr_t *hdr = image_get_header(IMAGE_SLOT_2);
     // Check & commit image
@@ -106,7 +95,8 @@ int cli_command_do_dfu(int argc, char *argv[]) {
 
 int cli_command_dump_app(int argc, char *argv[]) {
     uint8_t *ptr = (uint8_t *)&__slot2rom_start__;
-    size_t size = (size_t)&__slot2rom_size__;
+    const image_hdr_t *hdr = image_get_header(IMAGE_SLOT_2);
+    size_t size = (size_t)hdr->data_size;
 
     printf("Dumpling slot 2, (%u bytes)\n", size);
 

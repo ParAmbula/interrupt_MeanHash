@@ -4,7 +4,6 @@
 #include "simple_fileio.h"
 #include "dfu.h"
 
-// TODO use the last argument to specify the slot
 size_t sfio_fread(void *ptr, size_t size, size_t count, sfio_stream_t *stream) {
     assert(size == 1); 
     if (stream->offset + count > stream->size) {
