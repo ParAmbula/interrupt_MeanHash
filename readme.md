@@ -10,7 +10,7 @@ Interrupt is a community for embedded software makers and professionals alike.
 ## Contributing
 
 
-----####==== Fork of original Interrupt with goal to add Average/Mean Hash to fwup-signing example ====####----
+---###=== Fork of original Interrupt with goal to add Average/Mean Hash to fwup-signing example ===###---
 
 
 Interrupt welcomes submissions on embedded software topics.
