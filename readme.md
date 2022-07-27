@@ -9,6 +9,10 @@ Interrupt is a community for embedded software makers and professionals alike.
 
 ## Contributing
 
+
+-------#######======= Fork of original Interrupt with goal to add Average/Mean Hash to fwup-signing example =======#######-------
+
+
 Interrupt welcomes submissions on embedded software topics.
 
 Prior to getting in touch, you should get yourself acquainted with our [Code of Conduct](https://interrupt.memfault.com/code-of-conduct).
